@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Outlet Adam</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --red:#e11d2a;
+  --red-2:#ff2e3f;
+  --red-dark:#a80e18;
+  --white:#fff;
+  --bg:#fafafa;
+  --text:#111;
+  --muted:#6b7280;
+  --border:#ececec;
+  --shadow-sm:0 2px 8px rgba(0,0,0,.05);
+  --shadow:0 8px 30px rgba(0,0,0,.08);
+  --shadow-red:0 10px 40px rgba(225,29,42,.25);
+  --r:18px;
+  --t:.35s cubic-bezier(.22,1,.36,1);
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Cairo','Inter',system-ui,sans-serif;
+  background:var(--bg);color:var(--text);
+  overflow-x:hidden;-webkit-font-smoothing:antialiased;
+  transition:background .4s;
+}
+[dir="ltr"] body{font-family:'Inter','Cairo',system-ui,sans-serif}
+[hidden]{display:none!important}
+button,input,select,textarea{font-family:inherit;outline:none;border:none}
+button{cursor:pointer}
+img{display:block;max-width:100%}
+
+/* ============ HEADER ============ */
+.header{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(255,255,255,.85);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(0,0,0,.05);
+  transition:all var(--t);
+}
+.header.scrolled{box-shadow:0 4px 30px rgba(0,0,0,.06);background:rgba(255,255,255,.95)}
+.header-inner{
+  max-width:1280px;margin:0 auto;padding:14px 20px;
+  display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;flex-shrink:0}
+.logo{
+  width:46px;height:46px;border-radius:14px;
+  background:linear-gradient(135deg,var(--red),var(--red-2));
+  color:#fff;display:grid;place-items:center;
+  font-weight:800;font-size:18px;letter-spacing:.5px;
+  box-shadow:0 6px 20px rgba(225,29,42,.35);
+  transition:transform var(--t);
+}
+.brand:hover .logo{transform:rotate(-6deg) scale(1.05)}
+.brand-text h1{font-size:18px;font-weight:800;line-height:1.1}
+.brand-text span{font-size:11px;color:var(--muted);font-weight:500}
+
+.search-wrap{
+  flex:1;min-width:200px;position:relative;max-width:520px;
+}
+.search-icon{
+  position:absolute;top:50%;transform:translateY(-50%);
+  inset-inline-start:16px;width:18px;height:18px;
+  color:var(--muted);pointer-events:none;transition:color var(--t);
+}
+.search-wrap input{
+  width:100%;padding:13px 46px 13px 46px;
+  background:#f3f4f6;border-radius:14px;font-size:14px;
+  border:2px solid transparent;
+  transition:all var(--t);
+}
+[dir="rtl"] .search-wrap input{padding:13px 46px 13px 46px}
+.search-wrap input:focus{
+  background:#fff;border-color:var(--red);
+  box-shadow:0 0 0 4px rgba(225,29,42,.1);
+}
+.search-wrap input:focus + .search-icon{color:var(--red)}
+
+.actions{display:flex;align-items:center;gap:10px;margin-inline-start:auto}
+.lang-select{
+  padding:11px 14px;border-radius:12px;background:#f3f4f6;
+  font-size:13px;font-weight:600;cursor:pointer;
+  border:2px solid transparent;transition:all var(--t);
+}
+.lang-select:hover{background:#e9eaee}
+.lang-select:focus{border-color:var(--red);background:#fff}
+
+.btn{
+  padding:11px 20px;border-radius:12px;font-size:14px;font-weight:700;
+  transition:all var(--t);display:inline-flex;align-items:center;gap:8px;
+  white-space:nowrap;
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--red),var(--red-2));
+  color:#fff;box-shadow:0 4px 16px rgba(225,29,42,.3);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(225,29,42,.45)}
+.btn-primary:active{transform:translateY(0) scale(.97)}
+.btn-outline{
+  background:#fff;color:var(--red);border:2px solid var(--red);
+}
+.btn-outline:hover{background:var(--red);color:#fff;transform:translateY(-2px)}
+.btn-ghost{background:#f3f4f6;color:var(--text)}
+.btn-ghost:hover{background:#e9eaee}
+.btn-lg{padding:16px 36px;font-size:16px;border-radius:16px}
+.btn-danger{background:#fff;color:var(--red);border:2px solid #f3d5d7}
+.btn-danger:hover{background:var(--red);color:#fff;border-color:var(--red)}
+
+/* ============ HERO ============ */
+.hero{
+  min-height:88vh;display:grid;place-items:center;
+  padding:120px 20px 80px;position:relative;overflow:hidden;
+  background:linear-gradient(180deg,#fff 0%,#fff5f6 100%);
+}
+.hero-blob{
+  position:absolute;border-radius:50%;filter:blur(80px);opacity:.35;
+  pointer-events:none;
+}
+.hero-blob.b1{
+  width:500px;height:500px;background:var(--red-2);
+  top:-150px;inset-inline-start:-100px;
+  animation:float1 14s ease-in-out infinite;
+}
+.hero-blob.b2{
+  width:400px;height:400px;background:#ffb3ba;
+  bottom:-100px;inset-inline-end:-80px;
+  animation:float2 16s ease-in-out infinite;
+}
+@keyframes float1{
+  0%,100%{transform:translate(0,0) scale(1)}
+  50%{transform:translate(60px,40px) scale(1.1)}
+}
+@keyframes float2{
+  0%,100%{transform:translate(0,0) scale(1)}
+  50%{transform:translate(-50px,-30px) scale(1.15)}
+}
+.hero-content{position:relative;text-align:center;max-width:760px;z-index:2}
+.hero-badge{
+  display:inline-block;padding:8px 18px;border-radius:100px;
+  background:rgba(225,29,42,.1);color:var(--red);
+  font-size:13px;font-weight:700;margin-bottom:22px;
+  animation:fadeUp .8s .1s both;
+}
+.hero-title{
+  font-size:clamp(42px,7vw,80px);font-weight:800;line-height:1.05;
+  letter-spacing:-2px;margin-bottom:20px;
+  animation:fadeUp .8s .2s both;
+}
+.hero-title span{
+  background:linear-gradient(135deg,var(--red),var(--red-2));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hero-sub{
+  font-size:clamp(15px,2vw,19px);color:var(--muted);
+  margin-bottom:38px;font-weight:500;
+  animation:fadeUp .8s .3s both;
+}
+.hero .btn-lg{animation:fadeUp .8s .4s both}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(30px)}
+  to{opacity:1;transform:none}
+}
+
+/* ============ SECTIONS ============ */
+.section{max-width:1280px;margin:0 auto;padding:70px 20px}
+.section-head{display:flex;align-items:center;gap:18px;margin-bottom:38px}
+.section-head h3{font-size:clamp(26px,4vw,38px);font-weight:800;letter-spacing:-1px;white-space:nowrap}
+.section-line{flex:1;height:3px;border-radius:3px;background:linear-gradient(90deg,var(--red),transparent)}
+[dir="rtl"] .section-line{background:linear-gradient(270deg,var(--red),transparent)}
+.section-sub{color:var(--muted);font-size:16px;margin:-20px 0 38px;font-weight:500}
+
+/* ============ PRODUCTS ============ */
+.grid{
+  display:grid;gap:24px;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+}
+.card{
+  background:#fff;border-radius:22px;overflow:hidden;
+  box-shadow:var(--shadow-sm);
+  transition:all .45s cubic-bezier(.22,1,.36,1);
+  position:relative;cursor:pointer;
+  border:1px solid rgba(0,0,0,.03);
+}
+.card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 20px 50px rgba(225,29,42,.18);
+  border-color:rgba(225,29,42,.15);
+}
+.card-img{
+  aspect-ratio:1;overflow:hidden;background:#f3f4f6;position:relative;
+}
+.card-img img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform .7s cubic-bezier(.22,1,.36,1);
+}
+.card:hover .card-img img{transform:scale(1.08)}
+.card-badge{
+  position:absolute;top:14px;inset-inline-start:14px;
+  padding:6px 14px;border-radius:100px;
+  background:rgba(255,255,255,.95);color:var(--red);
+  font-size:12px;font-weight:800;backdrop-filter:blur(8px);
+  box-shadow:0 4px 12px rgba(0,0,0,.08);
+  opacity:0;transform:translateY(-6px);
+  transition:all .35s;
+}
+.card:hover .card-badge{opacity:1;transform:none}
+.card-body{padding:18px 20px 22px}
+.card-title{
+  font-size:16px;font-weight:700;margin-bottom:8px;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
+  overflow:hidden;line-height:1.4;min-height:44px;
+}
+.card-desc{
+  font-size:13px;color:var(--muted);line-height:1.5;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
+  overflow:hidden;margin-bottom:16px;min-height:38px;
+}
+.card-foot{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.price{
+  font-size:22px;font-weight:800;
+  background:linear-gradient(135deg,var(--red),var(--red-2));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.price small{font-size:14px;font-weight:700}
+.card-actions{display:flex;gap:6px}
+.icon-btn{
+  width:34px;height:34px;border-radius:10px;display:grid;place-items:center;
+  background:#f3f4f6;color:var(--muted);transition:all .25s;
+}
+.icon-btn:hover{background:var(--red);color:#fff;transform:scale(1.1)}
+.icon-btn svg{width:16px;height:16px}
+
+.empty{
+  text-align:center;padding:70px 20px;color:var(--muted);
+  font-size:16px;font-weight:600;
+}
+
+/* reveal animation */
+.reveal{opacity:0;transform:translateY(45px);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1)}
+.reveal.visible{opacity:1;transform:none}
+
+/* ============ PHONES ============ */
+.phones{
+  display:grid;gap:20px;
+  grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+}
+.phone-card{
+  background:#fff;border-radius:22px;padding:26px 22px;
+  box-shadow:var(--shadow-sm);text-align:center;
+  border:2px solid transparent;position:relative;overflow:hidden;
+  transition:all .45s cubic-bezier(.22,1,.36,1);
+}
+.phone-card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(225,29,42,.06),transparent);
+  opacity:0;transition:opacity .4s;
+}
+.phone-card:hover{
+  transform:translateY(-6px);
+  border-color:rgba(225,29,42,.25);
+  box-shadow:0 18px 45px rgba(225,29,42,.15);
+}
+.phone-card:hover::before{opacity:1}
+.phone-icon{
+  width:58px;height:58px;border-radius:18px;margin:0 auto 16px;
+  background:linear-gradient(135deg,var(--red),var(--red-2));
+  display:grid;place-items:center;color:#fff;
+  box-shadow:0 8px 24px rgba(225,29,42,.3);
+  transition:transform .45s cubic-bezier(.22,1,.36,1);
+  position:relative;z-index:1;
+}
+.phone-card:hover .phone-icon{transform:scale(1.1) rotate(-8deg)}
+.phone-icon svg{width:24px;height:24px}
+.phone-num{
+  font-size:22px;font-weight:800;letter-spacing:1px;
+  margin-bottom:6px;direction:ltr;position:relative;z-index:1;
+}
+.phone-tag{
+  display:inline-block;padding:4px 12px;border-radius:100px;
+  font-size:11px;font-weight:800;margin-bottom:18px;
+  background:rgba(225,29,42,.1);color:var(--red);
+  position:relative;z-index:1;
+}
+.phone-tag.none{background:#f3f4f6;color:var(--muted)}
+.phone-actions{display:flex;gap:8px;position:relative;z-index:1}
+.phone-actions .btn{flex:1;justify-content:center;font-size:13px;padding:11px 12px}
+.phone-actions a{text-decoration:none}
+
+/* ============ FOOTER ============ */
+.footer{
+  padding:40px 20px;text-align:center;color:var(--muted);
+  font-size:14px;font-weight:600;border-top:1px solid var(--border);
+  background:#fff;
+}
+.footer .logo{width:38px;height:38px;font-size:15px;margin:0 auto 12px;border-radius:12px}
+
+/* ============ MODALS ============ */
+.modal{
+  position:fixed;inset:0;z-index:1000;
+  display:flex;align-items:center;justify-content:center;padding:20px;
+  opacity:0;pointer-events:none;transition:opacity .35s;
+}
+.modal.open{opacity:1;pointer-events:auto}
+.modal-backdrop{
+  position:absolute;inset:0;background:rgba(15,15,20,.55);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+}
+.modal-content{
+  position:relative;background:#fff;border-radius:26px;
+  max-width:480px;width:100%;max-height:90vh;overflow-y:auto;
+  padding:34px 30px;
+  transform:translateY(40px) scale(.94);
+  transition:transform .5s cubic-bezier(.22,1,.36,1);
+  box-shadow:0 30px 80px rgba(0,0,0,.3);
+}
+.modal.open .modal-content{transform:none}
+.modal-content.wide{max-width:640px}
+.modal-close{
+  position:absolute;top:18px;inset-inline-end:18px;
+  width:36px;height:36px;border-radius:12px;
+  background:#f3f4f6;color:var(--muted);font-size:20px;font-weight:700;
+  display:grid;place-items:center;transition:all .25s;line-height:1;
+}
+.modal-close:hover{background:var(--red);color:#fff;transform:rotate(90deg)}
+.modal h4{font-size:22px;font-weight:800;margin-bottom:22px;letter-spacing:-.5px}
+
+/* form */
+.field{margin-bottom:16px}
+.field label{display:block;font-size:13px;font-weight:700;margin-bottom:8px;color:#374151}
+.field input,.field textarea{
+  width:100%;padding:13px 16px;border-radius:13px;
+  background:#f7f8fa;border:2px solid transparent;
+  font-size:14px;transition:all var(--t);resize:vertical;
+}
+.field textarea{min-height:90px;line-height:1.5}
+.field input:focus,.field textarea:focus{
+  background:#fff;border-color:var(--red);
+  box-shadow:0 0 0 4px rgba(225,29,42,.1);
+}
+.form-actions{display:flex;gap:10px;margin-top:24px}
+.form-actions .btn{flex:1;justify-content:center}
+.err-msg{
+  color:var(--red);font-size:13px;font-weight:700;margin-top:12px;
+  text-align:center;animation:shake .4s;
+}
+@keyframes shake{
+  0%,100%{transform:translateX(0)}
+  25%{transform:translateX(-6px)}
+  75%{transform:translateX(6px)}
+}
+
+/* QR modal */
+.qr-content{text-align:center;max-width:400px}
+.qr-frame{
+  width:260px;height:260px;margin:8px auto 20px;
+  padding:14px;background:#fff;border-radius:22px;
+  box-shadow:0 14px 44px rgba(225,29,42,.22);
+  display:grid;place-items:center;
+  transform:scale(.7) rotate(-6deg);opacity:0;
+  transition:transform .6s cubic-bezier(.22,1,.36,1),opacity .5s;
+}
+.modal.open .qr-frame{transform:none;opacity:1;transition-delay:.1s}
+.qr-frame img{width:100%;height:100%;border-radius:12px}
+.qr-number{
+  font-size:22px;font-weight:800;direction:ltr;letter-spacing:2px;
+  margin-bottom:4px;color:var(--red);
+}
+.qr-hint{font-size:13px;color:var(--muted);font-weight:600}
+
+/* admin list */
+.admin-item{
+  display:flex;align-items:center;gap:14px;
+  padding:12px;border-radius:16px;background:#f7f8fa;
+  margin-bottom:10px;transition:all .3s;
+  animation:slideIn .5s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes slideIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
+.admin-item:hover{background:#fff;box-shadow:0 6px 20px rgba(0,0,0,.07)}
+.admin-item img{width:52px;height:52px;border-radius:12px;object-fit:cover;flex-shrink:0}
+.admin-item-info{flex:1;min-width:0}
+.admin-item-info strong{display:block;font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.admin-item-info span{font-size:13px;color:var(--red);font-weight:800}
+.admin-item .icon-btn{flex-shrink:0}
+
+/* toast */
+.toast{
+  position:fixed;bottom:30px;inset-inline-start:50%;
+  transform:translate(-50%,80px) scale(.9);
+  background:#111;color:#fff;padding:14px 26px;border-radius:14px;
+  font-size:14px;font-weight:700;z-index:2000;
+  opacity:0;transition:all .45s cubic-bezier(.22,1,.36,1);
+  box-shadow:0 12px 40px rgba(0,0,0,.3);
+  pointer-events:none;white-space:nowrap;
+}
+[dir="rtl"] .toast{transform:translate(50%,80px) scale(.9)}
+.toast.show{opacity:1;transform:translate(-50%,0) scale(1)}
+[dir="rtl"] .toast.show{transform:translate(50%,0) scale(1)}
+
+/* responsive */
+@media(max-width:780px){
+  .header-inner{padding:12px 14px;gap:10px}
+  .brand-text span{display:none}
+  .brand-text h1{font-size:16px}
+  .search-wrap{order:3;flex-basis:100%;max-width:none;margin-top:4px}
+  .actions{margin-inline-start:auto}
+  .lang-select{padding:10px 10px;font-size:12px}
+  .btn{padding:10px 14px;font-size:13px}
+  .section{padding:50px 16px}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px}
+  .card-body{padding:14px 14px 16px}
+  .card-title{font-size:14px;min-height:38px}
+  .card-desc{display:none}
+  .price{font-size:18px}
+  .modal-content{padding:26px 20px;border-radius:22px}
+  .qr-frame{width:220px;height:220px}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="header" id="header">
+  <div class="header-inner">
+    <a class="brand" href="#top">
+      <div class="logo">OA</div>
+      <div class="brand-text">
+        <h1>Outlet Adam</h1>
+        <span data-i18n="tagline">أفضل المنتجات بأفضل الأسعار</span>
+      </div>
+    </a>
+
+    <div class="search-wrap">
+      <input type="text" id="searchInput" data-i18n-ph="search" placeholder="ابحث عن منتج...">
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+        <circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path>
+      </svg>
+    </div>
+
+    <div class="actions">
+      <select class="lang-select" id="langSelect">
+        <option value="ar">🇸🇾 عربي</option>
+        <option value="en">🇬🇧 EN</option>
+        <option value="fr">🇫🇷 FR</option>
+        <option value="de">🇩🇪 DE</option>
+        <option value="it">🇮🇹 IT</option>
+      </select>
+      <button class="btn btn-ghost" id="adminBtn" hidden data-i18n="admin">لوحة التحكم</button>
+      <button class="btn btn-primary" id="loginBtn" data-i18n="login">دخول</button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top">
+  <div class="hero-blob b1"></div>
+  <div class="hero-blob b2"></div>
+  <div class="hero-content">
+    <span class="hero-badge" data-i18n="hero_badge">✨ جودة عالية • أسعار منافسة</span>
+    <h2 class="hero-title">Outlet <span>Adam</span></h2>
+    <p class="hero-sub" data-i18n="hero_sub">منتجات أصلية مختارة بعناية، توصيل سريع، ودفع سهل عبر Whish Money.</p>
+    <button class="btn btn-primary btn-lg" id="shopNowBtn" data-i18n="hero_btn">تسوق الآن</button>
+  </div>
+</section>
+
+<!-- ============ PRODUCTS ============ -->
+<section class="section" id="products">
+  <div class="section-head">
+    <h3 data-i18n="products">المنتجات</h3>
+    <div class="section-line"></div>
+  </div>
+  <div class="grid" id="productGrid"></div>
+  <div class="empty" id="emptyState" hidden data-i18n="no_products">لا توجد منتجات</div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="section" id="contact">
+  <div class="section-head">
+    <h3 data-i18n="contact">تواصل معنا</h3>
+    <div class="section-line"></div>
+  </div>
+  <p class="section-sub" data-i18n="contact_sub">اتصل بنا أو امسح رمز QR للدفع عبر Whish Money</p>
+  <div class="phones" id="phoneGrid"></div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="logo">OA</div>
+  <div>© 2025 Outlet Adam — <span data-i18n="rights">جميع الحقوق محفوظة</span></div>
+</footer>
+
+<!-- ============ LOGIN MODAL ============ -->
+<div class="modal" id="loginModal">
+  <div class="modal-backdrop" data-close="loginModal"></div>
+  <div class="modal-content">
+    <button class="modal-close" data-close="loginModal">×</button>
+    <h4 data-i18n="login_title">تسجيل الدخول</h4>
+    <div class="field">
+      <label data-i18n="username">اسم المستخدم</label>
+      <input type="text" id="loginUser" autocomplete="username">
+    </div>
+    <div class="field">
+      <label data-i18n="password">كلمة المرور</label>
+      <input type="password" id="loginPass" autocomplete="current-password">
+    </div>
+    <div class="err-msg" id="loginErr" hidden data-i18n="wrong">بيانات الدخول غير صحيحة</div>
+    <div class="form-actions">
+      <button class="btn btn-primary" id="loginSubmit" data-i18n="login">دخول</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ ADMIN MODAL ============ -->
+<div class="modal" id="adminModal">
+  <div class="modal-backdrop" data-close="adminModal"></div>
+  <div class="modal-content wide">
+    <button class="modal-close" data-close="adminModal">×</button>
+    <h4 data-i18n="admin_title">لوحة التحكم</h4>
+    <button class="btn btn-primary" id="addProductBtn" style="width:100%;justify-content:center;margin-bottom:20px" data-i18n="add_product">+ إضافة منتج</button>
+    <div id="adminList"></div>
+  </div>
+</div>
+
+<!-- ============ PRODUCT FORM MODAL ============ -->
+<div class="modal" id="formModal">
+  <div class="modal-backdrop" data-close="formModal"></div>
+  <div class="modal-content">
+    <button class="modal-close" data-close="formModal">×</button>
+    <h4 id="formTitle" data-i18n="add_product">إضافة منتج</h4>
+    <input type="hidden" id="formId">
+    <div class="field">
+      <label data-i18n="f_title">العنوان</label>
+      <input type="text" id="formTitleInput">
+    </div>
+    <div class="field">
+      <label data-i18n="f_price">السعر</label>
+      <input type="number" id="formPriceInput" step="0.01" min="0">
+    </div>
+    <div class="field">
+      <label data-i18n="f_image">رابط الصورة</label>
+      <input type="url" id="formImageInput" placeholder="https://...">
+    </div>
+    <div class="field">
+      <label data-i18n="f_desc">الوصف</label>
+      <textarea id="formDescInput"></textarea>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-ghost" data-close="formModal" data-i18n="cancel">إلغاء</button>
+      <button class="btn btn-primary" id="formSave" data-i18n="save">حفظ</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ QR MODAL ============ -->
+<div class="modal" id="qrModal">
+  <div class="modal-backdrop" data-close="qrModal"></div>
+  <div class="modal-content qr-content">
+    <button class="modal-close" data-close="qrModal">×</button>
+    <h4 data-i18n="qr_title">رمز QR للدفع</h4>
+    <div class="qr-frame">
+      <img id="qrImg" alt="QR Code">
+    </div>
+    <div class="qr-number" id="qrNumber"></div>
+    <div class="qr-hint" data-i18n="qr_hint">امسح الرمز عبر تطبيق Whish Money</div>
+  </div>
+</div>
+
+<script>
+/* =====================================================
+   OUTLET ADAM — APP LOGIC
+   ===================================================== */
+const $ = (s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+
+/* ---------- TRANSLATIONS ---------- */
+const I18N = {
+  ar: {
+    dir: 'rtl', tagline: 'أفضل المنتجات بأفضل الأسعار',
+    search: 'ابحث عن منتج...', login: 'دخول', logout: 'خروج', admin: 'لوحة التحكم',
+    hero_badge: '✨ جودة عالية • أسعار منافسة',
+    hero_sub: 'منتجات أصلية مختارة بعناية، توصيل سريع، ودفع سهل عبر Whish Money.',
+    hero_btn: 'تسوق الآن',
+    products: 'المنتجات', contact: 'تواصل معنا',
+    contact_sub: 'اتصل بنا أو امسح رمز QR للدفع عبر Whish Money',
+    show_qr: 'عرض QR', call: 'اتصال', whish: 'Whish Money', no_whish: 'هاتف',
+    login_title: 'تسجيل الدخول', username: 'اسم المستخدم', password: 'كلمة المرور',
+    wrong: 'بيانات الدخول غير صحيحة', admin_title: 'لوحة التحكم',
+    add_product: 'إضافة منتج', edit_product: 'تعديل المنتج',
+    f_title: 'العنوان', f_price: 'السعر', f_image: 'رابط الصورة', f_desc: 'الوصف',
+    save: 'حفظ', cancel: 'إلغاء', edit: 'تعديل', delete: 'حذف',
+    no_products: 'لا توجد منتجات مطابقة', qr_title: 'رمز QR للدفع',
+    qr_hint: 'امسح الرمز عبر تطبيق Whish Money',
+    rights: 'جميع الحقوق محفوظة', welcome: 'مرحباً بك', logout_msg: 'تم تسجيل الخروج',
+    saved: 'تم الحفظ بنجاح', deleted: 'تم الحذف', confirm_del: 'هل أنت متأكد من حذف هذا المنتج؟',
+    required: 'يرجى تعبئة جميع الحقول المطلوبة'
+  },
+  en: {
+    dir: 'ltr', tagline: 'Best products, best prices',
+    search: 'Search products...', login: 'Login', logout: 'Logout', admin: 'Dashboard',
+    hero_badge: '✨ Premium quality • Competitive prices',
+    hero_sub: 'Handpicked original products, fast delivery, easy payment via Whish Money.',
+    hero_btn: 'Shop Now',
+    products: 'Products', contact: 'Contact Us',
+    contact_sub: 'Call us or scan the QR code to pay via Whish Money',
+    show_qr: 'Show QR', call: 'Call', whish: 'Whish Money', no_whish: 'Phone',
+    login_title: 'Sign In', username: 'Username', password: 'Password',
+    wrong: 'Invalid credentials', admin_title: 'Admin Dashboard',
+    add_product: 'Add Product', edit_product: 'Edit Product',
+    f_title: 'Title', f_price: 'Price', f_image: 'Image URL', f_desc: 'Description',
+    save: 'Save', cancel: 'Cancel', edit: 'Edit', delete: 'Delete',
+    no_products: 'No matching products', qr_title: 'Payment QR Code',
+    qr_hint: 'Scan with the Whish Money app',
+    rights: 'All rights reserved', welcome: 'Welcome', logout_msg: 'Logged out',
+    saved: 'Saved successfully', deleted: 'Deleted', confirm_del: 'Delete this product?',
+    required: 'Please fill all required fields'
+  },
+  fr: {
+    dir: 'ltr', tagline: 'Meilleurs produits, meilleurs prix',
+    search: 'Rechercher un produit...', login: 'Connexion', logout: 'Déconnexion', admin: 'Tableau de bord',
+    hero_badge: '✨ Qualité premium • Prix compétitifs',
+    hero_sub: 'Produits originaux sélectionnés, livraison rapide, paiement facile via Whish Money.',
+    hero_btn: 'Acheter',
+    products: 'Produits', contact: 'Contactez-nous',
+    contact_sub: 'Appelez-nous ou scannez le QR code pour payer via Whish Money',
+    show_qr: 'Voir QR', call: 'Appeler', whish: 'Whish Money', no_whish: 'Téléphone',
+    login_title: 'Connexion', username: "Nom d'utilisateur", password: 'Mot de passe',
+    wrong: 'Identifiants invalides', admin_title: 'Panneau Admin',
+    add_product: 'Ajouter un produit', edit_product: 'Modifier le produit',
+    f_title: 'Titre', f_price: 'Prix', f_image: "URL de l'image", f_desc: 'Description',
+    save: 'Enregistrer', cancel: 'Annuler', edit: 'Modifier', delete: 'Supprimer',
+    no_products: 'Aucun produit', qr_title: 'QR Code de paiement',
+    qr_hint: "Scannez avec l'application Whish Money",
+    rights: 'Tous droits réservés', welcome: 'Bienvenue', logout_msg: 'Déconnecté',
+    saved: 'Enregistré', deleted: 'Supprimé', confirm_del: 'Supprimer ce produit ?',
+    required: 'Veuillez remplir tous les champs'
+  },
+  de: {
+    dir: 'ltr', tagline: 'Beste Produkte, beste Preise',
+    search: 'Produkte suchen...', login: 'Anmelden', logout: 'Abmelden', admin: 'Dashboard',
+    hero_badge: '✨ Premium-Qualität • Wettbewerbsfähige Preise',
+    hero_sub: 'Handverlesene Originalprodukte, schnelle Lieferung, einfache Zahlung via Whish Money.',
+    hero_btn: 'Jetzt kaufen',
+    products: 'Produkte', contact: 'Kontakt',
+    contact_sub: 'Rufen Sie uns an oder scannen Sie den QR-Code für Whish Money',
+    show_qr: 'QR zeigen', call: 'Anrufen', whish: 'Whish Money', no_whish: 'Telefon',
+    login_title: 'Anmelden', username: 'Benutzername', password: 'Passwort',
+    wrong: 'Ungültige Anmeldedaten', admin_title: 'Admin-Panel',
+    add_product: 'Produkt hinzufügen', edit_product: 'Produkt bearbeiten',
+    f_title: 'Titel', f_price: 'Preis', f_image: 'Bild-URL', f_desc: 'Beschreibung',
+    save: 'Speichern', cancel: 'Abbrechen', edit: 'Bearbeiten', delete: 'Löschen',
+    no_products: 'Keine Produkte', qr_title: 'Zahlungs-QR-Code',
+    qr_hint: 'Mit der Whish Money App scannen',
+    rights: 'Alle Rechte vorbehalten', welcome: 'Willkommen', logout_msg: 'Abgemeldet',
+    saved: 'Gespeichert', deleted: 'Gelöscht', confirm_del: 'Dieses Produkt löschen?',
+    required: 'Bitte alle Felder ausfüllen'
+  },
+  it: {
+    dir: 'ltr', tagline: 'Migliori prodotti, migliori prezzi',
+    search: 'Cerca prodotti...', login: 'Accedi', logout: 'Esci', admin: 'Pannello',
+    hero_badge: '✨ Qualità premium • Prezzi competitivi',
+    hero_sub: 'Prodotti originali selezionati, consegna rapida, pagamento facile via Whish Money.',
+    hero_btn: 'Acquista ora',
+    products: 'Prodotti', contact: 'Contattaci',
+    contact_sub: 'Chiamaci o scansiona il QR code per pagare con Whish Money',
+    show_qr: 'Mostra QR', call: 'Chiama', whish: 'Whish Money', no_whish: 'Telefono',
+    login_title: 'Accedi', username: 'Nome utente', password: 'Password',
+    wrong: 'Credenziali non valide', admin_title: 'Pannello Admin',
+    add_product: 'Aggiungi prodotto', edit_product: 'Modifica prodotto',
+    f_title: 'Titolo', f_price: 'Prezzo', f_image: 'URL immagine', f_desc: 'Descrizione',
+    save: 'Salva', cancel: 'Annulla', edit: 'Modifica', delete: 'Elimina',
+    no_products: 'Nessun prodotto', qr_title: 'QR Code di pagamento',
+    qr_hint: "Scansiona con l'app Whish Money",
+    rights: 'Tutti i diritti riservati', welcome: 'Benvenuto', logout_msg: 'Disconnesso',
+    saved: 'Salvato', deleted: 'Eliminato', confirm_del: 'Eliminare questo prodotto?',
+    required: 'Compila tutti i campi'
+  }
+};
+
+/* ---------- PHONE NUMBERS ---------- */
+const PHONES = [
+  { number: '76882788', whish: true },
+  { number: '70059362', whish: false },
+  { number: '76719575', whish: false },
+  { number: '70896539', whish: true }
+];
+
+/* ---------- DEFAULT PRODUCTS ---------- */
+const DEFAULT_PRODUCTS = [
+  { id: 'p1', title: 'ساعة يد كلاسيكية', price: 89, image: 'https://picsum.photos/seed/watch1/600/600', desc: 'ساعة أنيقة بتصميم عصري مقاومة للماء.' },
+  { id: 'p2', title: 'حقيبة جلدية فاخرة', price: 120, image: 'https://picsum.photos/seed/bag2/600/600', desc: 'جلد طبيعي عالي الجودة بتشطيبات يدوية.' },
+  { id: 'p3', title: 'نظارة شمسية', price: 65, image: 'https://picsum.photos/seed/glasses3/600/600', desc: 'حماية UV400 مع إطار خفيف ومريح.' },
+  { id: 'p4', title: 'حذاء رياضي', price: 95, image: 'https://picsum.photos/seed/shoes4/600/600', desc: 'نعل مريح ومرن مثالي للاستخدام اليومي.' },
+  { id: 'p5', title: 'عطر فاخر', price: 75, image: 'https://picsum.photos/seed/perfume5/600/600', desc: 'رائحة شرقية تدوم طويلاً بلمسة فرنسية.' },
+  { id: 'p6', title: 'سماعات بلوتوث', price: 110, image: 'https://picsum.photos/seed/head6/600/600', desc: 'صوت نقي وعزل ضوضاء مع بطارية طويلة.' }
+];
+
+/* ---------- STATE ---------- */
+const STORAGE_KEY = 'outlet_adam_products_v1';
+const AUTH_KEY = 'outlet_adam_auth_v1';
+let state = {
+  lang: localStorage.getItem('outlet_adam_lang') || 'ar',
+  products: [],
+  isAdmin: sessionStorage.getItem(AUTH_KEY) === '1',
+  filter: ''
+};
+const ADMIN_USER = 'admin';
+const ADMIN_PASS = 'mm1298';
+
+/* ---------- STORAGE ---------- */
+function loadProducts() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch (e) {}
+  return DEFAULT_PRODUCTS.slice();
+}
+function saveProducts() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state.products));
+}
+
+/* ---------- TRANSLATE ---------- */
+function t(key) {
+  return (I18N[state.lang] && I18N[state.lang][key]) || I18N.en[key] || key;
+}
+function applyLang() {
+  const dict = I18N[state.lang] || I18N.en;
+  document.documentElement.lang = state.lang;
+  document.documentElement.dir = dict.dir;
+  $$('[data-i18n]').forEach(el => { el.textContent = t(el.dataset.i18n); });
+  $$('[data-i18n-ph]').forEach(el => { el.placeholder = t(el.dataset.i18nPh); });
+  $('#langSelect').value = state.lang;
+  renderProducts();
+  renderPhones();
+  updateAuthUI();
+}
+
+/* ---------- RENDER PRODUCTS ---------- */
+function renderProducts() {
+  const grid = $('#productGrid');
+  const empty = $('#emptyState');
+  const q = state.filter.trim().toLowerCase();
+  const list = q
+    ? state.products.filter(p =>
+        (p.title || '').toLowerCase().includes(q) ||
+        (p.desc || '').toLowerCase().includes(q))
+    : state.products;
+
+  grid.innerHTML = '';
+  if (!list.length) {
+    empty.hidden = false;
+    empty.textContent = t('no_products');
+    return;
+  }
+  empty.hidden = true;
+
+  list.forEach((p, i) => {
+    const card = document.createElement('div');
+    card.className = 'card reveal';
+    card.style.transitionDelay = (i * 60) + 'ms';
+    card.innerHTML = `
+      <div class="card-img">
+        <img src="${escapeAttr(p.image || 'https://picsum.photos/seed/placeholder/600/600')}" alt="${escapeAttr(p.title)}" loading="lazy" onerror="this.src='https://picsum.photos/seed/fallback/600/600'">
+        <span class="card-badge">Outlet Adam</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">${escapeHtml(p.title)}</div>
+        <div class="card-desc">${escapeHtml(p.desc || '')}</div>
+        <div class="card-foot">
+          <div class="price"><small>$</small>${formatPrice(p.price)}</div>
+          ${state.isAdmin ? `
+          <div class="card-actions">
+            <button class="icon-btn" data-edit="${p.id}" title="${t('edit')}">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+            </button>
+            <button class="icon-btn" data-del="${p.id}" title="${t('delete')}">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+            </button>
+          </div>` : ''}
+        </div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+
+  // observe reveals
+  requestAnimationFrame(() => {
+    $$('.card.reveal', grid).forEach(c => observer.observe(c));
+  });
+  // bind admin buttons
+  $$('[data-edit]', grid).forEach(b => b.addEventListener('click', e => {
+    e.stopPropagation();
+    openForm(b.dataset.edit);
+  }));
+  $$('[data-del]', grid).forEach(b => b.addEventListener('click', e => {
+    e.stopPropagation();
+    deleteProduct(b.dataset.del);
+  }));
+}
+
+function formatPrice(v) {
+  const n = Number(v) || 0;
+  return n.toFixed(2).replace(/\.00$/, '');
+}
+function escapeHtml(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+function escapeAttr(s) { return escapeHtml(s); }
+
+/* ---------- RENDER PHONES ---------- */
+function renderPhones() {
+  const wrap = $('#phoneGrid');
+  wrap.innerHTML = '';
+  PHONES.forEach((p, i) => {
+    const el = document.createElement('div');
+    el.className = 'phone-card reveal';
+    el.style.transitionDelay = (i * 80) + 'ms';
+    el.innerHTML = `
+      <div class="phone-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.7 2Z"/>
+        </svg>
+      </div>
+      <div class="phone-num">${p.number}</div>
+      <span class="phone-tag ${p.whish ? '' : 'none'}">${p.whish ? t('whish') : t('no_whish')}</span>
+      <div class="phone-actions">
+        <a class="btn btn-primary" href="tel:${p.number}">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.7 2Z"/></svg>
+          ${t('call')}
+        </a>
+        <button class="btn btn-outline" data-qr="${p.number}">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM18 18h3v3h-3zM14 21h1M21 14h-1"/></svg>
+          ${t('show_qr')}
+        </button>
+      </div>
+    `;
+    wrap.appendChild(el);
+  });
+  $$('[data-qr]', wrap).forEach(b => b.addEventListener('click', () => openQR(b.dataset.qr)));
+  requestAnimationFrame(() => $$('.phone-card.reveal', wrap).forEach(c => observer.observe(c)));
+}
+
+/* ---------- AUTH ---------- */
+function updateAuthUI() {
+  const adminBtn = $('#adminBtn');
+  const loginBtn = $('#loginBtn');
+  if (state.isAdmin) {
+    adminBtn.hidden = false;
+    adminBtn.textContent = t('admin');
+    loginBtn.textContent = t('logout');
+  } else {
+    adminBtn.hidden = true;
+    loginBtn.textContent = t('login');
+  }
+}
+function doLogin() {
+  const u = $('#loginUser').value.trim();
+  const p = $('#loginPass').value;
+  if (u === ADMIN_USER && p === ADMIN_PASS) {
+    state.isAdmin = true;
+    sessionStorage.setItem(AUTH_KEY, '1');
+    $('#loginErr').hidden = true;
+    closeModal('loginModal');
+    $('#loginUser').value = '';
+    $('#loginPass').value = '';
+    updateAuthUI();
+    renderProducts();
+    toast(t('welcome') + ' 👋');
+  } else {
+    $('#loginErr').hidden = false;
+  }
+}
+function doLogout() {
+  state.isAdmin = false;
+  sessionStorage.removeItem(AUTH_KEY);
+  updateAuthUI();
+  renderProducts();
+  toast(t('logout_msg'));
+}
+
+/* ---------- PRODUCT CRUD ---------- */
+function openForm(id) {
+  const modal = $('#formModal');
+  if (id) {
+    const p = state.products.find(x => x.id === id);
+    if (!p) return;
+    $('#formTitle').textContent = t('edit_product');
+    $('#formTitleInput').value = p.title || '';
+    $('#formPriceInput').value = p.price || '';
+    $('#formImageInput').value = p.image || '';
+    $('#formDescInput').value = p.desc || '';
+    $('#formId').value = p.id;
+  } else {
+    $('#formTitle').textContent = t('add_product');
+    $('#formTitleInput').value = '';
+    $('#formPriceInput').value = '';
+    $('#formImageInput').value = '';
+    $('#formDescInput').value = '';
+    $('#formId').value = '';
+  }
+  openModal('formModal');
+  setTimeout(() => $('#formTitleInput').focus(), 300);
+}
+function saveForm() {
+  const title = $('#formTitleInput').value.trim();
+  const price = parseFloat($('#formPriceInput').value);
+  const image = $('#formImageInput').value.trim();
+  const desc = $('#formDescInput').value.trim();
+  if (!title || isNaN(price)) { toast(t('required')); return; }
+
+  const id = $('#formId').value;
+  if (id) {
+    const p = state.products.find(x => x.id === id);
+    if (p) { p.title = title; p.price = price; p.image = image; p.desc = desc; }
+  } else {
+    state.products.unshift({
+      id: 'p' + Date.now(),
+      title, price, image, desc
+    });
+  }
+  saveProducts();
+  closeModal('formModal');
+  renderProducts();
+  renderAdminList();
+  toast(t('saved') + ' ✓');
+}
+function deleteProduct(id) {
+  if (!confirm(t('confirm_del'))) return;
+  state.products = state.products.filter(x => x.id !== id);
+  saveProducts();
+  renderProducts();
+  renderAdminList();
+  toast(t('deleted'));
+}
+function renderAdminList() {
+  const wrap = $('#adminList');
+  if (!state.products.length) {
+    wrap.innerHTML = `<div class="empty" style="padding:24px">${t('no_products')}</div>`;
+    return;
+  }
+  wrap.innerHTML = state.products.map((p, i) => `
+    <div class="admin-item" style="animation-delay:${i * 40}ms">
+      <img src="${escapeAttr(p.image || 'https://picsum.photos/seed/x/100/100')}" alt="" onerror="this.src='https://picsum.photos/seed/fallback/100/100'">
+      <div class="admin-item-info">
+        <strong>${escapeHtml(p.title)}</strong>
+        <span>$${formatPrice(p.price)}</span>
+      </div>
+      <button class="icon-btn" data-aedit="${p.id}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+      </button>
+      <button class="icon-btn" data-adel="${p.id}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+      </button>
+    </div>
+  `).join('');
+  $$('[data-aedit]', wrap).forEach(b => b.addEventListener('click', () => openForm(b.dataset.aedit)));
+  $$('[data-adel]', wrap).forEach(b => b.addEventListener('click', () => deleteProduct(b.dataset.adel)));
+}
+
+/* ---------- MODALS ---------- */
+function openModal(id) {
+  const m = document.getElementById(id);
+  if (!m) return;
+  m.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(id) {
+  const m = document.getElementById(id);
+  if (!m) return;
+  m.classList.remove('open');
+  document.body.style.overflow = '';
+}
+function openQR(number) {
+  const url = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&margin=0&bgcolor=ffffff&color=e11d2a&data=${encodeURIComponent(number)}`;
+  const img = $('#qrImg');
+  img.src = url;
+  $('#qrNumber').textContent = number;
+  // reset animation
+  const frame = $('.qr-frame');
+  frame.style.transition = 'none';
+  frame.style.transform = 'scale(.7) rotate(-6deg)';
+  frame.style.opacity = '0';
+  requestAnimationFrame(() => {
+    frame.style.transition = '';
+    frame.style.transform = '';
+    frame.style.opacity = '';
+  });
+  openModal('qrModal');
+}
+
+/* ---------- TOAST ---------- */
+let toastTimer = null;
+function toast(msg) {
+  let el = $('.toast');
+  if (!el) {
+    el = document.createElement('div');
+    el.className = 'toast';
+    document.body.appendChild(el);
+  }
+  el.textContent = msg;
+  requestAnimationFrame(() => el.classList.add('show'));
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 2200);
+}
+
+/* ---------- SCROLL OBSERVER ---------- */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+/* ---------- EVENTS ---------- */
+function bindEvents() {
+  // header scroll
+  window.addEventListener('scroll', () => {
+    $('#header').classList.toggle('scrolled', window.scrollY > 12);
+  }, { passive: true });
+
+  // search
+  $('#searchInput').addEventListener('input', (e) => {
+    state.filter = e.target.value;
+    renderProducts();
+  });
+
+  // language
+  $('#langSelect').addEventListener('change', (e) => {
+    state.lang = e.target.value;
+    localStorage.setItem('outlet_adam_lang', state.lang);
+    applyLang();
+  });
+
+  // login button
+  $('#loginBtn').addEventListener('click', () => {
+    if (state.isAdmin) doLogout();
+    else openModal('loginModal');
+  });
+
+  // admin button
+  $('#adminBtn').addEventListener('click', () => {
+    renderAdminList();
+    openModal('adminModal');
+  });
+
+  // login submit
+  $('#loginSubmit').addEventListener('click', doLogin);
+  $('#loginPass').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+  $('#loginUser').addEventListener('keydown', e => { if (e.key === 'Enter') $('#loginPass').focus(); });
+
+  // add product
+  $('#addProductBtn').addEventListener('click', () => openForm(null));
+
+  // form save
+  $('#formSave').addEventListener('click', saveForm);
+  $('#formTitleInput').addEventListener('keydown', e => { if (e.key === 'Enter') $('#formPriceInput').focus(); });
+
+  // hero shop now
+  $('#shopNowBtn').addEventListener('click', () => {
+    document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
+  });
+
+  // close buttons
+  document.addEventListener('click', (e) => {
+    const closeId = e.target.getAttribute && e.target.getAttribute('data-close');
+    if (closeId) closeModal(closeId);
+  });
+
+  // ESC closes modals
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      $$('.modal.open').forEach(m => closeModal(m.id));
+    }
+  });
+
+  // section reveals for headers
+  $$('.section-head, .section-sub').forEach(el => {
+    el.classList.add('reveal');
+    observer.observe(el);
+  });
+}
+
+/* ---------- INIT ---------- */
+function init() {
+  state.products = loadProducts();
+  applyLang();
+  bindEvents();
+  updateAuthUI();
+  // re-observe after lang switch rebuilds
+  const origApply = applyLang;
+  applyLang = function() {
+    origApply();
+    requestAnimationFrame(() => {
+      $$('.reveal:not(.visible)').forEach(el => observer.observe(el));
+    });
+  };
+}
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+        </html>
